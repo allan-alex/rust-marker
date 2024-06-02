@@ -24,11 +24,7 @@ impl ErroredEmail for ErrorEmail {
     }
 }
 
-trait ValidateEmail {
-    fn validate_email(value: String) -> Result<ValidEmail, ErrorEmail>;
-}
-
-impl ValidateEmail for Email {
+impl Email {
     fn validate_email(value: String) -> Result<ValidEmail, ErrorEmail> {
         let email_pattern = r"(?i)^[a-z0-9.+-]+@[a-z0-9.-]+\.[a-z]{2,}$";
         let re = Regex::new(email_pattern).unwrap();
@@ -46,9 +42,9 @@ where
     U: ErroredEmail + std::fmt::Debug
 {
     if let Some(valid_email) = valid_email{
-        println!("{} is a Valid Email", valid_email.get_inner());
+        println!("{} is a valid email", valid_email.get_inner());
     } else if let Some(error_email) = error_email {
-        println!("{} is a Error Email", error_email.get_inner());
+        println!("{} is not a valid Email", error_email.get_inner());
     }
 }
 
